@@ -1,0 +1,20 @@
+{
+  "canisters": {
+    "backend": {
+      "type": "kybra",
+      "main": "backend/src/main.py"
+    },
+    "frontend": {
+      "dependencies": [
+        "backend"
+      ],
+      "frontend": {
+        "entrypoint": "frontend/src/index.html"
+      },
+      "source": [
+        "frontend/src"
+      ],
+      "type": "assets"
+    }
+  }
+}

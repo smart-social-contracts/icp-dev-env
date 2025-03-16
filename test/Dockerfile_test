@@ -1,0 +1,10 @@
+FROM ghcr.io/smart-social-contracts/icp-dev-env:test
+
+COPY backend/src/main.py /app/backend/src/main.py
+COPY frontend/src/index.html /app/frontend/src/index.html
+COPY dfx.json /app/dfx.json
+COPY entrypoint.sh /app/entrypoint.sh
+
+WORKDIR /app
+
+CMD ["./entrypoint.sh"]
