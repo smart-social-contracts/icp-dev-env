@@ -3,7 +3,7 @@ ARG PYTHON_VERSION=3.10
 # Base image with Python and GLIBC 2.34 (required for candid-extractor)
 FROM python:${PYTHON_VERSION}-slim-bookworm
 
-ARG DFX_VERSION=0.25.0
+ARG DFX_VERSION=0.25.1
 ARG NODE_VERSION="22"
 
 # System dependencies

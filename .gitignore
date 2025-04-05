@@ -1,0 +1,26 @@
+# Docker
+.dockerignore
+*.env
+
+# Python (for any test scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing
+.coverage
+.pytest_cache/
+
+# Internet Computer / Kybra
+.dfx/
+.kybra/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log

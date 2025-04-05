@@ -1,13 +1,17 @@
 # ICP Development Environment
 
-A Docker-based development environment for [Smart Social Contracts](https://github.com/smart-social-contracts) on the [Internet Computer Protocol (ICP)](https://internetcomputer.org) using [Kybra](https://github.com/demergent-labs/kybra) for Python development. Includes node.js for frontend development.
+A Docker-based development environment on the [Internet Computer Protocol (ICP)](https://internetcomputer.org) using [Kybra](https://github.com/demergent-labs/kybra) for Python development. Includes node.js for frontend development.
+
+[![CI/CD](https://github.com/smart-social-contracts/icp-dev-env/actions/workflows/ci.yml/badge.svg)](https://github.com/smart-social-contracts/icp-dev-env/actions)
+[![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue.svg)](https://github.com/smart-social-contracts/icp-dev-env/pkgs/container/icp-dev-env)
+[![License](https://img.shields.io/github/license/smart-social-contracts/icp-dev-env.svg)](https://github.com/smart-social-contracts/icp-dev-env/blob/main/LICENSE)
 
 ## Features
 
 - **Python 3.10.7** with [**Kybra 0.7.0**](https://github.com/demergent-labs/kybra/releases/tag/0.7.0)
 - **Pre-installed Kybra prerequisites** - Ready to use without additional setup
 - **Node.js 22.12.0** with **npm 10.9.2** - For frontend development
-- **DFX 0.25.0** - Internet Computer's development toolkit
+- **DFX 0.25.1** - Internet Computer's development toolkit
 
 ## Getting Started
 
