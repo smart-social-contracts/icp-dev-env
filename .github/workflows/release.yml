@@ -44,26 +44,36 @@ jobs:
         python -m pip install --upgrade pip
         pip install bumpversion
     
-    # Only perform version bump if release_type is provided
+    # Set default release type for automated runs
+    - name: Set release type
+      id: set_release_type
+      run: |
+        if [ "${{ github.event.inputs.release_type }}" == "" ]; then
+          echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
+          echo "CREATE_GITHUB_RELEASE=true" >> $GITHUB_ENV
+        else
+          echo "RELEASE_TYPE=${{ github.event.inputs.release_type }}" >> $GITHUB_ENV
+          echo "CREATE_GITHUB_RELEASE=${{ github.event.inputs.create_github_release }}" >> $GITHUB_ENV
+        fi
+    
+    # Perform version bump with the determined release type
     - name: Bump version
-      if: ${{ github.event.inputs.release_type != '' }}
       id: bump_version
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        bumpversion ${{ github.event.inputs.release_type }}
+        bumpversion ${{ env.RELEASE_TYPE }}
         echo "NEW_VERSION=$(cat version.txt)" >> $GITHUB_OUTPUT
     
-    # Only push changes if we did a version bump
+    # Push changes
     - name: Push changes
-      if: ${{ github.event.inputs.release_type != '' }}
       run: |
         git push origin
         git push origin --tags
     
-    # Only create a GitHub release if we did a version bump and the user requested it
+    # Create a GitHub release
     - name: Create Release
-      if: ${{ github.event.inputs.release_type != '' && github.event.inputs.create_github_release == 'true' }}
+      if: ${{ env.CREATE_GITHUB_RELEASE == 'true' }}
       uses: softprops/action-gh-release@v1
       with:
         tag_name: v${{ steps.bump_version.outputs.NEW_VERSION }}
