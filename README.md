@@ -11,7 +11,7 @@ A Docker-based development environment on the [Internet Computer Protocol (ICP)]
 - **Python 3.10.7** with [**Kybra 0.7.0**](https://github.com/demergent-labs/kybra/releases/tag/0.7.0)
 - **Pre-installed Kybra prerequisites** - Ready to use without additional setup
 - **Node.js 22.12.0** with **npm 10.9.2** - For frontend development
-- **DFX 0.25.1** - Internet Computer's development toolkit
+- **DFX 0.26.0** - Internet Computer's development toolkit
 
 ## Getting Started
 
