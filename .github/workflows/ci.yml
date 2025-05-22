@@ -32,6 +32,10 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.description=ICP Development Environment for Kybra
+            org.opencontainers.image.licenses=MIT
 
   build-and-test-image:
     needs: build-and-push-base-image
@@ -85,3 +89,7 @@ jobs:
           context: .
           push: true
           tags: ${{ env.TAGS }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.description=ICP Development Environment for Kybra
+            org.opencontainers.image.licenses=MIT
