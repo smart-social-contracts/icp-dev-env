@@ -2,6 +2,15 @@
 set -e
 set -x
 
+# Verify didc is installed correctly
+echo "Checking didc installation..."
+if didc --version; then
+  echo " didc is installed correctly"
+else
+  echo " didc is not installed correctly"
+  exit 1
+fi
+
 # Start dfx in the background
 echo "Starting dfx..."
 dfx start --background --clean
