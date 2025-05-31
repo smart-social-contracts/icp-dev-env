@@ -1,6 +1,6 @@
 # ICP Development Environment
 
-A Docker-based development environment on the [Internet Computer Protocol (ICP)](https://internetcomputer.org) using [Kybra](https://github.com/demergent-labs/kybra) for Python development. Includes node.js for frontend development.
+A Docker-based development environment on the [Internet Computer Protocol (ICP)](https://internetcomputer.org) using [Kybra](https://github.com/demergent-labs/kybra) as a Python CDK for the Internet Computer. Includes node.js for frontend development.
 
 [![CI/CD](https://github.com/smart-social-contracts/icp-dev-env/actions/workflows/ci.yml/badge.svg)](https://github.com/smart-social-contracts/icp-dev-env/actions)
 [![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue.svg)](https://github.com/smart-social-contracts/icp-dev-env/pkgs/container/icp-dev-env)
@@ -8,10 +8,10 @@ A Docker-based development environment on the [Internet Computer Protocol (ICP)]
 
 ## Features
 
-- **Python 3.10.7** with [**Kybra 0.7.0**](https://github.com/demergent-labs/kybra/releases/tag/0.7.0)
+- **Python 3.10.7** with [**Kybra's latest version**](https://github.com/demergent-labs/kybra/releases)
 - **Pre-installed Kybra prerequisites** - Ready to use without additional setup
-- **Node.js 22.12.0** with **npm 10.9.2** - For frontend development
-- **DFX 0.26.0** - Internet Computer's development toolkit
+- Latest versions of **Node.js 22.x** with **npm 10.x** - For frontend development
+- Latest version of **dfx** - [Internet Computer's development toolkit](https://github.com/dfinity/sdk/releases)
 
 ## Getting Started
 
