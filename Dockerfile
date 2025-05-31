@@ -3,8 +3,9 @@ ARG PYTHON_VERSION=3.10
 # Base image with Python and GLIBC 2.34 (required for candid-extractor)
 FROM python:${PYTHON_VERSION}-slim-bookworm
 
-ARG DFX_VERSION=0.26.0
+ARG DFX_VERSION=0.27.0
 ARG NODE_VERSION="22"
+ARG KYBRA_VERSION="0.7.1"
 
 # System dependencies
 RUN apt-get update
@@ -20,7 +21,7 @@ RUN DFX_VERSION=${DFX_VERSION} DFXVM_INIT_YES=true sh -ci "$(curl -fsSL https://
 ENV PATH="/root/.local/share/dfx/bin:$PATH"
 
 # Install Kybra and prerequisites
-RUN pip install --no-cache-dir kybra
+RUN pip install --no-cache-dir kybra==${KYBRA_VERSION}
 RUN python -m kybra install-dfx-extension
 
 # Create temporary project for prerequisite installation
