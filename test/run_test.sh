@@ -6,7 +6,7 @@ IMAGE_NAME="icp-dev-env:test_temp"
 
 # Build and run test container
 echo "Building test image..."
-docker build -t ${IMAGE_NAME} -f Dockerfile_test . || {
+docker build --no-cache -t ${IMAGE_NAME} -f Dockerfile_test . || {
     echo "❌ Failed to build test image"
     exit 1
 }
