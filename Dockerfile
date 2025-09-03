@@ -45,4 +45,9 @@ RUN node --version && \
     python --version && \
     dfx --version
 
+# Install didc (Candid interface description language tool)
+RUN curl -fsSL -o /tmp/didc-linux64 https://github.com/dfinity/candid/releases/download/2024-07-29/didc-linux64 && \
+    chmod +x /tmp/didc-linux64 && \
+    mv /tmp/didc-linux64 /usr/bin/didc
+
 WORKDIR /app
