@@ -24,6 +24,16 @@ ENV PATH="/root/.local/share/dfx/bin:$PATH"
 RUN pip install --no-cache-dir ic-basilisk==${BASILISK_VERSION}
 RUN python -m basilisk install-dfx-extension
 
+# Pre-download RustPython stdlib (workaround: PyPI ic-basilisk 0.8.0 builds a
+# download URL using its own version against the kybra repo, but kybra has no
+# 0.8.0 release. We fetch from kybra 0.7.1 where the asset actually exists.)
+RUN mkdir -p /root/.config/basilisk/${BASILISK_VERSION} && \
+    curl -Lf https://github.com/demergent-labs/kybra/releases/download/0.7.1/rust_python_stdlib.tar.gz \
+         -o /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz && \
+    tar -xf /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz \
+         -C /root/.config/basilisk/${BASILISK_VERSION}/ && \
+    rm /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz
+
 # Create temporary project for prerequisite installation
 WORKDIR /tmp/basilisk-init
 RUN echo 'from basilisk import query, text\n\n@query\ndef greet() -> text:\n    return "Hello"' > main.py && \
