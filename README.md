@@ -1,6 +1,6 @@
 # ICP Development Environment
 
-A Docker-based development environment on the [Internet Computer Protocol (ICP)](https://internetcomputer.org) using [Kybra](https://github.com/demergent-labs/kybra) as a Python CDK for the Internet Computer. Includes node.js for frontend development.
+A Docker-based development environment on the [Internet Computer Protocol (ICP)](https://internetcomputer.org) using [Basilisk](https://github.com/smart-social-contracts/basilisk) as a Python CDK for the Internet Computer. Includes node.js for frontend development.
 
 [![CI/CD](https://github.com/smart-social-contracts/icp-dev-env/actions/workflows/ci.yml/badge.svg)](https://github.com/smart-social-contracts/icp-dev-env/actions)
 [![Docker Image](https://img.shields.io/badge/docker-ghcr.io-blue.svg)](https://github.com/smart-social-contracts/icp-dev-env/pkgs/container/icp-dev-env)
@@ -8,8 +8,8 @@ A Docker-based development environment on the [Internet Computer Protocol (ICP)]
 
 ## Features
 
-- **Python 3.10.7** with [**Kybra's latest version**](https://github.com/demergent-labs/kybra/releases)
-- **Pre-installed Kybra prerequisites** - Ready to use without additional setup
+- **Python 3.10.7** with [**Basilisk**](https://github.com/smart-social-contracts/basilisk)
+- **Pre-installed Basilisk prerequisites** - Ready to use without additional setup
 - Latest versions of **Node.js 22.x** with **npm 10.x** - For frontend development
 - Latest version of **dfx** - [Internet Computer's development toolkit](https://github.com/dfinity/sdk/releases)
 
@@ -71,7 +71,7 @@ cd test
 This test script:
 
 - Initializes a clean dfx environment
-- Deploys a hello canister in Kybra and a simple frontend canister
+- Deploys a hello canister in Basilisk and a simple frontend canister
 
 ## Contributing
 

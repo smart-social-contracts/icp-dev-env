@@ -34,7 +34,7 @@ jobs:
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:test
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
-            org.opencontainers.image.description=ICP Development Environment for Kybra
+            org.opencontainers.image.description=ICP Development Environment for Basilisk
             org.opencontainers.image.licenses=MIT
 
   build-and-test-image:
@@ -91,5 +91,5 @@ jobs:
           tags: ${{ env.TAGS }}
           labels: |
             org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
-            org.opencontainers.image.description=ICP Development Environment for Kybra
+            org.opencontainers.image.description=ICP Development Environment for Basilisk
             org.opencontainers.image.licenses=MIT

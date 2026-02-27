@@ -11,9 +11,9 @@ __pycache__/
 .coverage
 .pytest_cache/
 
-# Internet Computer / Kybra
+# Internet Computer / Basilisk
 .dfx/
-.kybra/
+.basilisk/
 
 # IDEs and editors
 .idea/

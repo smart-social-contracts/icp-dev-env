@@ -5,7 +5,7 @@ FROM python:${PYTHON_VERSION}-slim-bookworm
 
 ARG DFX_VERSION=0.30.2
 ARG NODE_VERSION="22"
-ARG KYBRA_VERSION="0.7.1"
+ARG BASILISK_VERSION="0.8.0"
 
 # System dependencies
 RUN apt-get update
@@ -20,14 +20,14 @@ RUN n ${NODE_VERSION}
 RUN DFX_VERSION=${DFX_VERSION} DFXVM_INIT_YES=true sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 ENV PATH="/root/.local/share/dfx/bin:$PATH"
 
-# Install Kybra and prerequisites
-RUN pip install --no-cache-dir kybra==${KYBRA_VERSION}
-RUN python -m kybra install-dfx-extension
+# Install Basilisk and prerequisites
+RUN pip install --no-cache-dir ic-basilisk==${BASILISK_VERSION}
+RUN python -m basilisk install-dfx-extension
 
 # Create temporary project for prerequisite installation
-WORKDIR /tmp/kybra-init
-RUN echo 'from kybra import query, text\n\n@query\ndef greet() -> text:\n    return "Hello"' > main.py && \
-    echo '{"canisters":{"test":{"type":"kybra","main":"main.py"}}}' > dfx.json
+WORKDIR /tmp/basilisk-init
+RUN echo 'from basilisk import query, text\n\n@query\ndef greet() -> text:\n    return "Hello"' > main.py && \
+    echo '{"canisters":{"test":{"type":"basilisk","main":"main.py"}}}' > dfx.json
 
 # Install prerequisites by deploying a test canister
 RUN dfx start --background && \
@@ -35,7 +35,7 @@ RUN dfx start --background && \
     dfx stop
 
 # Clean-ups
-RUN rm -rf /tmp/kybra-init
+RUN rm -rf /tmp/basilisk-init
 RUN apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

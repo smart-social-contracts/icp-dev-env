@@ -1,7 +1,7 @@
 {
   "canisters": {
     "backend": {
-      "type": "kybra",
+      "type": "basilisk",
       "main": "backend/src/main.py"
     },
     "frontend": {
