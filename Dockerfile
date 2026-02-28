@@ -34,6 +34,10 @@ RUN mkdir -p /root/.config/basilisk/${BASILISK_VERSION} && \
          -C /root/.config/basilisk/${BASILISK_VERSION}/ && \
     rm /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz
 
+# Pre-download CPython canister template for fast template-based builds
+RUN curl -fL https://github.com/smart-social-contracts/basilisk/releases/download/cpython-wasm-3.13.0/cpython_canister_template.wasm \
+         -o /root/.config/basilisk/${BASILISK_VERSION}/cpython_canister_template.wasm
+
 # Create temporary project for prerequisite installation
 WORKDIR /tmp/basilisk-init
 RUN echo 'from basilisk import query, text\n\n@query\ndef greet() -> text:\n    return "Hello"' > main.py && \
