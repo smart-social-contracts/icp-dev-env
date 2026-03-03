@@ -5,7 +5,7 @@ FROM python:${PYTHON_VERSION}-slim-bookworm
 
 ARG DFX_VERSION=0.30.2
 ARG NODE_VERSION="22"
-ARG BASILISK_VERSION="0.8.35"
+ARG BASILISK_VERSION="0.8.36"
 
 # System dependencies
 RUN apt-get update
