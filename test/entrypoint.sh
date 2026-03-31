@@ -2,19 +2,19 @@
 set -e
 set -x
 
-# Start dfx in the background
-echo "Starting dfx..."
-dfx start --background --clean
+# Start icp network in the background
+echo "Starting icp network..."
+icp network start -d
 
-# Wait for dfx to be ready
-echo "Waiting for dfx to start..."
+# Wait for icp network to be ready
+echo "Waiting for icp network to start..."
 sleep 10
 
 # Deploy the hello canister
 echo "Deploying hello canister..."
-dfx deploy
+icp deploy
 
-echo "Stopping dfx..."
-dfx stop
+echo "Stopping icp network..."
+icp network stop
 
 echo "All done!"

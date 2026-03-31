@@ -1,0 +1,20 @@
+canisters:
+- name: backend
+  build:
+    steps:
+    - type: script
+      commands:
+      - CANISTER_CANDID_PATH=.basilisk/backend/backend.did python -m basilisk backend backend/src/main.py
+      - cp .basilisk/backend/backend.wasm "$ICP_WASM_OUTPUT_PATH"
+- name: frontend
+  build:
+    steps:
+    - type: script
+      commands:
+      - echo "Asset canister"
+  dependencies:
+  - backend
+  frontend:
+    entrypoint: frontend/src/index.html
+  source:
+  - frontend/src
