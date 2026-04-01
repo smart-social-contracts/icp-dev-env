@@ -5,7 +5,7 @@ FROM python:${PYTHON_VERSION}-slim-bookworm
 
 ARG ICP_CLI_VERSION=0.2
 ARG NODE_VERSION="22"
-ARG BASILISK_VERSION="0.9.11"
+ARG BASILISK_VERSION="0.11.2"
 
 # System dependencies
 RUN apt-get update
