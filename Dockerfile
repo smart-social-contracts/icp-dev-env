@@ -3,9 +3,9 @@ ARG PYTHON_VERSION=3.10
 # Base image with Python and GLIBC 2.34 (required for candid-extractor)
 FROM python:${PYTHON_VERSION}-slim-bookworm
 
-ARG DFX_VERSION=0.30.2
+ARG ICP_CLI_VERSION=0.2
 ARG NODE_VERSION="22"
-ARG BASILISK_VERSION="0.9.11"
+ARG BASILISK_VERSION="0.11.2"
 
 # System dependencies
 RUN apt-get update
@@ -16,13 +16,13 @@ RUN apt-get install -y npm
 RUN npm install -g n
 RUN n ${NODE_VERSION}
 
-# Install DFX and add to PATH
-RUN DFX_VERSION=${DFX_VERSION} DFXVM_INIT_YES=true sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
-ENV PATH="/root/.local/share/dfx/bin:$PATH"
+# Install icp CLI and add to PATH
+RUN npm install -g @icp-sdk/icp-cli
+ENV PATH="/root/.local/share/icp/bin:$PATH"
 
 # Install Basilisk and prerequisites
 RUN pip install --no-cache-dir ic-basilisk==${BASILISK_VERSION}
-RUN python -m basilisk install-dfx-extension
+RUN python -m basilisk install-icp-extension
 
 # Pre-download RustPython stdlib (workaround: PyPI ic-basilisk 0.8.0 builds a
 # download URL using its own version against the kybra repo, but kybra has no
@@ -41,12 +41,12 @@ RUN curl -fL https://github.com/smart-social-contracts/basilisk/releases/downloa
 # Create temporary project for prerequisite installation
 WORKDIR /tmp/basilisk-init
 RUN echo 'from basilisk import query, text\n\n@query\ndef greet() -> text:\n    return "Hello"' > main.py && \
-    echo '{"canisters":{"test":{"type":"basilisk","main":"main.py"}}}' > dfx.json
+    printf 'canisters:\n- name: test\n  build:\n    steps:\n    - type: script\n      commands:\n      - CANISTER_CANDID_PATH=.basilisk/test/test.did python -m basilisk test main.py\n      - cp .basilisk/test/test.wasm "$ICP_WASM_OUTPUT_PATH"\n' > icp.yaml
 
 # Install prerequisites by deploying a test canister
-RUN dfx start --background && \
-    dfx deploy --no-wallet && \
-    dfx stop
+RUN icp network start -d && \
+    icp deploy && \
+    icp network stop
 
 # Clean-ups
 RUN rm -rf /tmp/basilisk-init
@@ -57,6 +57,6 @@ RUN apt-get autoremove -y && \
 # Verify installations
 RUN node --version && \
     python --version && \
-    dfx --version
+    icp --version
 
 WORKDIR /app

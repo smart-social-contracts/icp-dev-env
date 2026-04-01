@@ -11,7 +11,7 @@ A Docker-based development environment on the [Internet Computer Protocol (ICP)]
 - **Python 3.10.7** with [**Basilisk**](https://github.com/smart-social-contracts/basilisk)
 - **Pre-installed Basilisk prerequisites** - Ready to use without additional setup
 - Latest versions of **Node.js 22.x** with **npm 10.x** - For frontend development
-- Latest version of **dfx** - [Internet Computer's development toolkit](https://github.com/dfinity/sdk/releases)
+- Latest version of **icp** CLI - [Internet Computer's development toolkit](https://cli.internetcomputer.org)
 
 ## Getting Started
 
@@ -29,13 +29,13 @@ docker run -it --rm ghcr.io/smart-social-contracts/icp-dev-env:latest bash
 
 ## Usage Example
 
-Mount your `dfx` project directories and files into the container and use a custom entrypoint script:
+Mount your project directories and files into the container and use a custom entrypoint script:
 
 ```bash
 docker run --rm -it \
     -v "${PWD}/src:/app/src" \
     -v "${PWD}/tests:/app/tests" \
-    -v "${PWD}/dfx.json:/app/dfx.json" \
+    -v "${PWD}/icp.yaml:/app/icp.yaml" \
     -v "${PWD}/entrypoint.sh:/app/entrypoint.sh" \
     --entrypoint "/app/entrypoint.sh" \
     ghcr.io/smart-social-contracts/icp-dev-env:latest
@@ -46,11 +46,11 @@ Example `entrypoint.sh`:
 ```bash
 #!/bin/bash
 
-dfx start --background --clean
+icp network start -d
 sleep 10
-dfx deploy
+icp deploy
 # >>>>>>>>>> Add your tests here <<<<<<<<<<
-dfx stop
+icp network stop
 ```
 
 ## Building Locally
@@ -70,7 +70,7 @@ cd test
 
 This test script:
 
-- Initializes a clean dfx environment
+- Initializes a clean icp network environment
 - Deploys a hello canister in Basilisk and a simple frontend canister
 
 ## Contributing
