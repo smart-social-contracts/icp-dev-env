@@ -8,7 +8,7 @@ A Docker-based development environment on the [Internet Computer Protocol (ICP)]
 
 ## Features
 
-- **Python 3.10.7** with [**Basilisk**](https://github.com/smart-social-contracts/basilisk)
+- **Python 3.13** with [**Basilisk**](https://github.com/smart-social-contracts/basilisk)
 - **Pre-installed Basilisk prerequisites** - Ready to use without additional setup
 - Latest versions of **Node.js 22.x** with **npm 10.x** - For frontend development
 - Latest version of **dfx** - [Internet Computer's development toolkit](https://github.com/dfinity/sdk/releases)

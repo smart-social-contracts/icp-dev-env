@@ -1,4 +1,4 @@
-ARG PYTHON_VERSION=3.10
+ARG PYTHON_VERSION=3.13
 
 # Base image with Python and GLIBC 2.34 (required for candid-extractor)
 FROM python:${PYTHON_VERSION}-slim-bookworm
@@ -21,7 +21,9 @@ RUN DFX_VERSION=${DFX_VERSION} DFXVM_INIT_YES=true sh -ci "$(curl -fsSL https://
 ENV PATH="/root/.local/share/dfx/bin:$PATH"
 
 # Install Basilisk and prerequisites
-RUN pip install --no-cache-dir ic-basilisk==${BASILISK_VERSION}
+# zombie-imp: restores 'imp' module removed in Python 3.12, needed by modulegraph
+# setuptools<82: restores 'pkg_resources' module removed in setuptools 82, needed by modulegraph
+RUN pip install --no-cache-dir zombie-imp "setuptools<82" ic-basilisk==${BASILISK_VERSION}
 RUN python -m basilisk install-dfx-extension
 
 # Pre-download RustPython stdlib (workaround: PyPI ic-basilisk 0.8.0 builds a
