@@ -1,8 +1,10 @@
 {
   "canisters": {
     "backend": {
-      "type": "basilisk",
-      "main": "backend/src/main.py"
+      "type": "custom",
+      "build": "CANISTER_CANDID_PATH=./backend.did python -m basilisk backend backend/src/main.py",
+      "candid": "backend.did",
+      "wasm": ".basilisk/backend/backend.wasm"
     },
     "frontend": {
       "dependencies": [

@@ -5,7 +5,7 @@ FROM python:${PYTHON_VERSION}-slim-bookworm
 
 ARG DFX_VERSION=0.30.2
 ARG NODE_VERSION="22"
-ARG BASILISK_VERSION="0.9.11"
+ARG BASILISK_VERSION="0.11.25"
 
 # System dependencies
 RUN apt-get update
@@ -20,32 +20,20 @@ RUN n ${NODE_VERSION}
 RUN DFX_VERSION=${DFX_VERSION} DFXVM_INIT_YES=true sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 ENV PATH="/root/.local/share/dfx/bin:$PATH"
 
-# Install Basilisk and prerequisites
-# zombie-imp: restores 'imp' module removed in Python 3.12, needed by modulegraph
-# setuptools<82: restores 'pkg_resources' module removed in setuptools 82, needed by modulegraph
-RUN pip install --no-cache-dir zombie-imp "setuptools<82" ic-basilisk==${BASILISK_VERSION}
-RUN python -m basilisk install-dfx-extension
-
-# Pre-download RustPython stdlib (workaround: PyPI ic-basilisk 0.8.0 builds a
-# download URL using its own version against the kybra repo, but kybra has no
-# 0.8.0 release. We fetch from kybra 0.7.1 where the asset actually exists.)
-RUN mkdir -p /root/.config/basilisk/${BASILISK_VERSION} && \
-    curl -Lf https://github.com/demergent-labs/kybra/releases/download/0.7.1/rust_python_stdlib.tar.gz \
-         -o /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz && \
-    tar -xf /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz \
-         -C /root/.config/basilisk/${BASILISK_VERSION}/ && \
-    rm /root/.config/basilisk/${BASILISK_VERSION}/rust_python_stdlib.tar.gz
+# Install Basilisk
+RUN pip install --no-cache-dir ic-basilisk==${BASILISK_VERSION}
 
 # Pre-download CPython canister template for fast template-based builds
-RUN curl -fL https://github.com/smart-social-contracts/basilisk/releases/download/cpython-wasm-3.13.0/cpython_canister_template.wasm \
+RUN mkdir -p /root/.config/basilisk/${BASILISK_VERSION} && \
+    curl -fL https://github.com/smart-social-contracts/basilisk/releases/download/cpython-wasm-3.13.0/cpython_canister_template.wasm \
          -o /root/.config/basilisk/${BASILISK_VERSION}/cpython_canister_template.wasm
 
-# Create temporary project for prerequisite installation
+# Create temporary project to verify build pipeline works
 WORKDIR /tmp/basilisk-init
-RUN echo 'from basilisk import query, text\n\n@query\ndef greet() -> text:\n    return "Hello"' > main.py && \
-    echo '{"canisters":{"test":{"type":"basilisk","main":"main.py"}}}' > dfx.json
+RUN echo 'from basilisk import query\n\n@query\ndef greet() -> str:\n    return "Hello"' > main.py && \
+    echo '{"canisters":{"test":{"type":"custom","build":"CANISTER_CANDID_PATH=./test.did python -m basilisk test main.py","candid":"test.did","wasm":".basilisk/test/test.wasm"}}}' > dfx.json
 
-# Install prerequisites by deploying a test canister
+# Verify the build pipeline works end-to-end
 RUN dfx start --background && \
     dfx deploy --no-wallet && \
     dfx stop
@@ -59,6 +47,7 @@ RUN apt-get autoremove -y && \
 # Verify installations
 RUN node --version && \
     python --version && \
-    dfx --version
+    dfx --version && \
+    basilisk --version
 
 WORKDIR /app
